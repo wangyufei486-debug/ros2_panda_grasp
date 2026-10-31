@@ -1,0 +1,11 @@
+
+# Goal：请求执行一次抓取
+bool start
+---
+# Result：最终执行结果
+bool success
+string message
+---
+# Feedback：任务进行中的状态
+string stage
+float32 progress
