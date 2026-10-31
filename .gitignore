@@ -1,0 +1,21 @@
+# Local ROS 2 build output
+/build/
+/install/
+/log/
+
+# Python environments and caches
+/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Editor and local ROS state
+/.vscode/
+/.idea/
+/.ros/
+
+# Trained weights and datasets are supplied separately
+/models/*.pt
+/models/*.pth
+/models/*.onnx
+/datasets/
