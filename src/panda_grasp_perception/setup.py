@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='wyf',
     maintainer_email='wyf@todo.todo',
-    description='TODO: Package description',
+    description='YOLOv8 RGB-D cube localization and TF2 target publishing',
     license='Apache-2.0',
     extras_require={
         'test': [
@@ -24,7 +24,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'target_demo = panda_grasp_perception.target_demo:main',
             'yolo_detector = panda_grasp_perception.yolo_node:main',
         ],
     },

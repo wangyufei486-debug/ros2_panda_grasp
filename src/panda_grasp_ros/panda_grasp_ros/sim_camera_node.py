@@ -2,6 +2,7 @@
 """PyBullet Panda 相机节点：发布 RGB-D 图像并执行视觉引导抓取。"""
 
 import time
+from pathlib import Path
 
 import numpy as np
 import pybullet as p
@@ -30,7 +31,7 @@ from panda_grasp_ros.sim_rgbd_camera import (
     CAM_H,
     CAM_EYE,
 )
-from panda_grasp_ros.tf_utils import static_camera_transforms
+from panda_grasp_ros.tf_utils import camera_transform, static_camera_transforms
 
 class SimCameraNode(Node):
 
@@ -41,6 +42,11 @@ class SimCameraNode(Node):
 
         self.declare_parameter('gui', False)
         self.declare_parameter('camera_hz', 2.0)
+        self.declare_parameter('extrinsic_mode', 'groundtruth')
+        self.declare_parameter(
+            'calibration_file',
+            str(Path.home() / 'panda_grasp_ws/outputs/calibration_collect/full_18/handeye_result.npz')
+        )
 
         # 方块初始位置，支持通过 ROS 2 参数修改
         self.declare_parameter('cube_x', 0.48)
@@ -53,9 +59,16 @@ class SimCameraNode(Node):
 
         gui = bool(self.get_parameter('gui').value)
         hz = float(self.get_parameter('camera_hz').value)
+        self.extrinsic_mode = str(self.get_parameter('extrinsic_mode').value)
+        calibration_file = str(self.get_parameter('calibration_file').value)
 
         if hz <= 0:
             raise ValueError('camera_hz must be positive')
+
+        # 启动仿真前验证标定文件；已是 panda_link0 外参，不再加 0.05 m。
+        self.T_base_camera = camera_transform(
+            self.extrinsic_mode, CAM_EYE, calibration_file
+        )
 
         self.bridge = CvBridge()
 
@@ -303,10 +316,10 @@ class SimCameraNode(Node):
         """发布 world、Panda 基座和相机之间的静态 TF。"""
         stamp = self.get_clock().now().to_msg()
         self.tf_broadcaster.sendTransform(
-            static_camera_transforms(stamp, CAM_EYE)
+            static_camera_transforms(stamp, CAM_EYE, self.T_base_camera)
         )
         self.get_logger().info(
-            'Static TF published: '
+            f'Static TF published ({self.extrinsic_mode}): '
             'world -> panda_link0 -> camera_optical_frame'
         )
 

@@ -12,6 +12,7 @@ import rclpy
 from cv_bridge import CvBridge
 from geometry_msgs.msg import PointStamped
 from rclpy.node import Node
+from rclpy.time import Time
 from sensor_msgs.msg import CameraInfo, Image
 from ultralytics import YOLO
 
@@ -29,6 +30,7 @@ class YoloNode(Node):
         self.declare_parameter('camera_eye', [0.48, 0.0, 1.12])
         self.declare_parameter('camera_target', [0.48, 0.0, 0.30])
         self.declare_parameter('camera_up', [0.0, 1.0, 0.0])
+        self.declare_parameter('extrinsic_mode', 'groundtruth')
         self.declare_parameter('table_z', 0.30)
         self.declare_parameter('cube_half', 0.025)
 
@@ -37,6 +39,9 @@ class YoloNode(Node):
         self.camera_eye = list(self.get_parameter('camera_eye').value)
         self.camera_target = list(self.get_parameter('camera_target').value)
         self.camera_up = list(self.get_parameter('camera_up').value)
+        self.extrinsic_mode = str(self.get_parameter('extrinsic_mode').value)
+        if self.extrinsic_mode not in ('groundtruth', 'calibrated'):
+            raise ValueError(f'Unknown extrinsic_mode: {self.extrinsic_mode}')
         self.table_z = float(self.get_parameter('table_z').value)
         self.cube_half = float(self.get_parameter('cube_half').value)
         if not weights.is_file():
@@ -96,6 +101,31 @@ class YoloNode(Node):
         info_msg = self._pending['info'].pop(key)
         self.process_frame(rgb_msg, depth_msg, info_msg)
 
+    def camera_geometry_for_frame(self, rgb_msg):
+        """标定模式从 TF2 获取相机姿态，避免定位计算混入手工真值。"""
+        if self.extrinsic_mode == 'groundtruth':
+            return self.camera_eye, self.camera_target, self.camera_up
+        frame = rgb_msg.header.frame_id or 'camera_optical_frame'
+        try:
+            tf = self.tf_buffer.lookup_transform(
+                'world', frame, Time.from_msg(rgb_msg.header.stamp)
+            )
+        except TransformException as exc:
+            raise ValueError(f'Calibrated camera TF unavailable: {exc}') from exc
+        t, q = tf.transform.translation, tf.transform.rotation
+        quat = np.asarray([q.x, q.y, q.z, q.w], dtype=np.float64)
+        length = np.linalg.norm(quat)
+        if not np.isfinite(length) or length < 1e-9:
+            raise ValueError('Calibrated camera TF has invalid quaternion')
+        x, y, z, w = quat / length
+        rotation = np.array([
+            [1 - 2*(y*y + z*z), 2*(x*y - z*w), 2*(x*z + y*w)],
+            [2*(x*y + z*w), 1 - 2*(x*x + z*z), 2*(y*z - x*w)],
+            [2*(x*z - y*w), 2*(y*z + x*w), 1 - 2*(x*x + y*y)],
+        ])
+        eye = np.array([t.x, t.y, t.z], dtype=np.float64)
+        return eye, eye + rotation[:, 2], -rotation[:, 1]
+
     def process_frame(self, rgb_msg, depth_msg, info_msg):
         try:
             bgr = self.bridge.imgmsg_to_cv2(rgb_msg, desired_encoding='bgr8')
@@ -145,11 +175,12 @@ class YoloNode(Node):
                                     cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                                     (0, 255, 255), 2)
                         try:
+                            eye, target, up = self.camera_geometry_for_frame(rgb_msg)
                             estimate = locate_cube(
                                 mask, depth, info_msg.k,
-                                eye=self.camera_eye,
-                                target=self.camera_target,
-                                up=self.camera_up,
+                                eye=eye,
+                                target=target,
+                                up=up,
                                 table_z=self.table_z,
                                 cube_half=self.cube_half)
                             

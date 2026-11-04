@@ -8,14 +8,26 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
 
 # Editor and local ROS state
 /.vscode/
 /.idea/
 /.ros/
+/backups/
+/outputs/tmp/
+/outputs/calibration_collect/smoke_*/
+/outputs/calibration_collect/reproduce_*/
+*.tmp
+*.log
 
 # Trained weights and datasets are supplied separately
-/models/*.pt
-/models/*.pth
-/models/*.onnx
+/models/
 /datasets/
+*.pt
+*.pth
+*.onnx
+*.engine
+*.safetensors

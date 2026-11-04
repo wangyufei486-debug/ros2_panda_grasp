@@ -1,6 +1,8 @@
 
 """一键启动 Panda 仿真与 YOLOv8 RGB-D 感知节点。"""
 
+from pathlib import Path
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
@@ -36,6 +38,18 @@ def generate_launch_description():
         description='相机图像发布频率'
     )
 
+    extrinsic_mode_arg = DeclareLaunchArgument(
+        'extrinsic_mode',
+        default_value='groundtruth',
+        description='相机外参模式：groundtruth 或 calibrated'
+    )
+
+    calibration_file_arg = DeclareLaunchArgument(
+        'calibration_file',
+        default_value=str(Path.home() / 'panda_grasp_ws/outputs/calibration_collect/full_18/handeye_result.npz'),
+        description='calibrated 模式使用的 handeye_result.npz 路径'
+    )
+
     # ========== 2. PyBullet 仿真节点 ==========
 
     sim_node = Node(
@@ -59,7 +73,9 @@ def generate_launch_description():
             'camera_hz': ParameterValue(
                 LaunchConfiguration('camera_hz'),
                 value_type=float
-            )
+            ),
+            'extrinsic_mode': LaunchConfiguration('extrinsic_mode'),
+            'calibration_file': LaunchConfiguration('calibration_file')
         }]
     )
 
@@ -68,7 +84,8 @@ def generate_launch_description():
     yolo_node = Node(
         package='panda_grasp_perception',
         executable='yolo_detector',
-        output='screen'
+        output='screen',
+        parameters=[{'extrinsic_mode': LaunchConfiguration('extrinsic_mode')}]
     )
 
     # ========== 4. 统一启动 ==========
@@ -78,6 +95,8 @@ def generate_launch_description():
         cube_x_arg,
         cube_y_arg,
         camera_hz_arg,
+        extrinsic_mode_arg,
+        calibration_file_arg,
         sim_node,
         yolo_node
     ])

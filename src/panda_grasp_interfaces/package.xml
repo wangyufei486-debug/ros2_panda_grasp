@@ -3,7 +3,7 @@
 <package format="3">
   <name>panda_grasp_interfaces</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>ExecuteGrasp action interface for Panda visual grasp</description>
   <maintainer email="wyf@todo.todo">wyf</maintainer>
   <license>Apache-2.0</license>
 

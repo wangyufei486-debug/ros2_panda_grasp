@@ -17,7 +17,7 @@ setup(
     zip_safe=True,
     maintainer='user',
     maintainer_email='unknown@example.com',
-    description='YOLOv8 RGB-D Panda grasp starter for ROS 2 Jazzy',
+    description='ROS 2 Jazzy PyBullet Panda RGB-D grasp and Eye-to-Hand calibration',
     license='Apache-2.0',
     entry_points={
         'console_scripts': [

@@ -1,0 +1,198 @@
+{
+  "dataset": "/home/wyf/panda_grasp_ws/outputs/calibration_collect/full_18/dataset.json",
+  "result": "/home/wyf/panda_grasp_ws/outputs/calibration_collect/full_18/handeye_result.npz",
+  "method": "park",
+  "sample_count": 18,
+  "frames": {
+    "base": "panda_link0 URDF Link",
+    "hand": "panda_hand URDF Link",
+    "camera": "camera_optical_frame",
+    "target": "SB 检测顺序中的第一个内角点，x 沿列递增、y 沿行递增"
+  },
+  "base_inertial_offset_m": [
+    0.0,
+    0.0,
+    0.05
+  ],
+  "base_inertial_source": "/home/wyf/panda_grasp_ws/.venv/lib/python3.12/site-packages/pybullet_data/franka_panda/panda.urdf",
+  "T_base_camera": [
+    [
+      0.9999964614339708,
+      -0.002656683556483905,
+      -0.0001383908120651603,
+      0.47804789436329587
+    ],
+    [
+      -0.0026566501592232335,
+      -0.9999964420694358,
+      0.00024095311062530267,
+      -0.0017549278177986637
+    ],
+    [
+      -0.00013903045584719165,
+      -0.00024058460202383558,
+      -0.9999999613947906,
+      1.1225597723886285
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pnp_rms_px_mean": 0.16415093427738392,
+  "pnp_rms_px_max": 0.3531110869116847,
+  "pnp_max_point_error_px": 0.7300456428784523,
+  "per_sample": [
+    {
+      "sample_id": 1,
+      "image": "images/chessboard_001.png",
+      "pnp_reprojection_rms_px": 0.057996664046088386,
+      "pnp_reprojection_max_px": 0.09710665428815499,
+      "hand_target_translation_residual_mm": 0.3023138570732057,
+      "hand_target_rotation_residual_deg": 1.7075472925031877e-06
+    },
+    {
+      "sample_id": 2,
+      "image": "images/chessboard_002.png",
+      "pnp_reprojection_rms_px": 0.11139369680002806,
+      "pnp_reprojection_max_px": 0.1668588868551228,
+      "hand_target_translation_residual_mm": 0.2273000720342557,
+      "hand_target_rotation_residual_deg": 0.06585569187979975
+    },
+    {
+      "sample_id": 3,
+      "image": "images/chessboard_003.png",
+      "pnp_reprojection_rms_px": 0.03816868759321645,
+      "pnp_reprojection_max_px": 0.0956126141314237,
+      "hand_target_translation_residual_mm": 0.300240297867251,
+      "hand_target_rotation_residual_deg": 0.0784814439687224
+    },
+    {
+      "sample_id": 4,
+      "image": "images/chessboard_004.png",
+      "pnp_reprojection_rms_px": 0.3531110869116847,
+      "pnp_reprojection_max_px": 0.7300456428784523,
+      "hand_target_translation_residual_mm": 0.6932464761203214,
+      "hand_target_rotation_residual_deg": 0.40156546321245656
+    },
+    {
+      "sample_id": 5,
+      "image": "images/chessboard_005.png",
+      "pnp_reprojection_rms_px": 0.2474501888221433,
+      "pnp_reprojection_max_px": 0.44662493007193926,
+      "hand_target_translation_residual_mm": 0.28301947403005445,
+      "hand_target_rotation_residual_deg": 0.11332926750431281
+    },
+    {
+      "sample_id": 6,
+      "image": "images/chessboard_006.png",
+      "pnp_reprojection_rms_px": 0.04110530159369415,
+      "pnp_reprojection_max_px": 0.10577562581571996,
+      "hand_target_translation_residual_mm": 0.23240109816722107,
+      "hand_target_rotation_residual_deg": 0.013163050838332156
+    },
+    {
+      "sample_id": 7,
+      "image": "images/chessboard_007.png",
+      "pnp_reprojection_rms_px": 0.34732550564865894,
+      "pnp_reprojection_max_px": 0.5260015840125593,
+      "hand_target_translation_residual_mm": 0.5176915606376661,
+      "hand_target_rotation_residual_deg": 0.37126668755768993
+    },
+    {
+      "sample_id": 8,
+      "image": "images/chessboard_008.png",
+      "pnp_reprojection_rms_px": 0.1833518043904818,
+      "pnp_reprojection_max_px": 0.45684629689881506,
+      "hand_target_translation_residual_mm": 0.5201574466792699,
+      "hand_target_rotation_residual_deg": 0.04828906720556058
+    },
+    {
+      "sample_id": 9,
+      "image": "images/chessboard_009.png",
+      "pnp_reprojection_rms_px": 0.1380909911869054,
+      "pnp_reprojection_max_px": 0.3698281957206489,
+      "hand_target_translation_residual_mm": 0.4503506986819082,
+      "hand_target_rotation_residual_deg": 0.13001565003877397
+    },
+    {
+      "sample_id": 10,
+      "image": "images/chessboard_010.png",
+      "pnp_reprojection_rms_px": 0.2596716750401383,
+      "pnp_reprojection_max_px": 0.4542289586335106,
+      "hand_target_translation_residual_mm": 0.6140779880469637,
+      "hand_target_rotation_residual_deg": 0.23350256349263177
+    },
+    {
+      "sample_id": 11,
+      "image": "images/chessboard_011.png",
+      "pnp_reprojection_rms_px": 0.034125331134502494,
+      "pnp_reprojection_max_px": 0.06823993556798703,
+      "hand_target_translation_residual_mm": 0.13062995849022777,
+      "hand_target_rotation_residual_deg": 0.02632195656012838
+    },
+    {
+      "sample_id": 12,
+      "image": "images/chessboard_012.png",
+      "pnp_reprojection_rms_px": 0.037672446355692876,
+      "pnp_reprojection_max_px": 0.08644851128596043,
+      "hand_target_translation_residual_mm": 0.34328448941720185,
+      "hand_target_rotation_residual_deg": 0.01112726761846191
+    },
+    {
+      "sample_id": 13,
+      "image": "images/chessboard_013.png",
+      "pnp_reprojection_rms_px": 0.20891146891824638,
+      "pnp_reprojection_max_px": 0.38070432244266544,
+      "hand_target_translation_residual_mm": 0.37233225552800997,
+      "hand_target_rotation_residual_deg": 0.17208475168001666
+    },
+    {
+      "sample_id": 14,
+      "image": "images/chessboard_014.png",
+      "pnp_reprojection_rms_px": 0.19635051248609187,
+      "pnp_reprojection_max_px": 0.4155051336732918,
+      "hand_target_translation_residual_mm": 0.16905116011424698,
+      "hand_target_rotation_residual_deg": 0.09368116235535504
+    },
+    {
+      "sample_id": 15,
+      "image": "images/chessboard_015.png",
+      "pnp_reprojection_rms_px": 0.20431009930420724,
+      "pnp_reprojection_max_px": 0.41328272364461394,
+      "hand_target_translation_residual_mm": 0.47368103182397525,
+      "hand_target_rotation_residual_deg": 0.10825947026051401
+    },
+    {
+      "sample_id": 16,
+      "image": "images/chessboard_016.png",
+      "pnp_reprojection_rms_px": 0.2657093772324427,
+      "pnp_reprojection_max_px": 0.5886273900311454,
+      "hand_target_translation_residual_mm": 0.16975119953090234,
+      "hand_target_rotation_residual_deg": 0.1479786872274504
+    },
+    {
+      "sample_id": 17,
+      "image": "images/chessboard_017.png",
+      "pnp_reprojection_rms_px": 0.19127540811425373,
+      "pnp_reprojection_max_px": 0.396899240690772,
+      "hand_target_translation_residual_mm": 0.6794995415757145,
+      "hand_target_rotation_residual_deg": 0.04814818890470497
+    },
+    {
+      "sample_id": 18,
+      "image": "images/chessboard_018.png",
+      "pnp_reprojection_rms_px": 0.03869657141443387,
+      "pnp_reprojection_max_px": 0.06987838355384539,
+      "hand_target_translation_residual_mm": 0.2851517515235553,
+      "hand_target_rotation_residual_deg": 0.0638612656687691
+    }
+  ],
+  "hand_target_translation_residual_mm_max": 0.6932464761203214,
+  "hand_target_rotation_residual_deg_max": 0.40156546321245656,
+  "truth_translation_error_mm": 3.666459156205035,
+  "truth_rotation_error_deg": 0.1530463048661901,
+  "truth_source": "sim_rgbd_camera.CAM_EYE/CAM_TARGET/CAM_UP；仅用于求解后验证"
+}
